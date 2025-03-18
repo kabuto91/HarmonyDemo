@@ -15,7 +15,6 @@
 
 import { router } from '@kit.ArkUI';
 import { promptAction } from '@kit.ArkUI';
-import libCheckNapi from 'libentry.so';
 import CommonConstants from '../constants/CommonConstants';
 import Logger from './Logger';
 
@@ -46,7 +45,8 @@ export class CommonUtils {
    * @param {string} password password
    */
   public loginNative(account: string, password: string): void {
-    let check: string = this.loginCheckNative(account, password);
+    let check: string = 'not_login';
+    if (account === 'user' && password === '123456') check = 'login';
     if (CommonConstants.LOGIN_TEXT !== check) {
       Logger.error(CommonConstants.TAG_COMMON_UTILS, 'login account or password is empty');
       this.showToastContent(check);
@@ -71,18 +71,6 @@ export class CommonUtils {
     } else {
       check = CommonConstants.LOGIN_TEXT;
     }
-    return check;
-  }
-
-  /**
-   * Native login account and password.
-   *
-   * @param {string} account account
-   * @param {string} password password
-   * @return {string} return  check result
-   */
-  private loginCheckNative(account: string, password: string): string {
-    let check: string = libCheckNapi.nativeCheck(account, password);
     return check;
   }
 

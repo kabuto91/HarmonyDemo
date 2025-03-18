@@ -1,1 +1,0 @@
-export const nativeCheck: (account: string, password: string) => string;
