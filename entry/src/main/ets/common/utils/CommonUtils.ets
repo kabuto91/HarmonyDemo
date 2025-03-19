@@ -46,7 +46,7 @@ export class CommonUtils {
    */
   public loginNative(account: string, password: string): void {
     let check: string = 'not_login';
-    if (account === 'user' && password === '123456') check = 'login';
+    if (account === '123456' && password === '123456') check = 'login';
     if (CommonConstants.LOGIN_TEXT !== check) {
       Logger.error(CommonConstants.TAG_COMMON_UTILS, 'login account or password is empty');
       this.showToastContent(check);
