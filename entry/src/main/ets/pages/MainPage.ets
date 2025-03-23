@@ -53,6 +53,17 @@ struct MainPage {
         )
       )
       TabContent() {
+        HomePage()
+      }
+      .tabBar(
+        this.TabBuilder(
+          $r('app.string.test'),
+          CommonConstants.TEST_TAB_INDEX,
+          $r('app.media.ic_home_selected'),
+          $r('app.media.ic_home_normal')
+        )
+      )
+      TabContent() {
         MinePage()
       }
       .tabBar(this.TabBuilder($r('app.string.mine_title'), CommonConstants.MINE_TAB_INDEX,

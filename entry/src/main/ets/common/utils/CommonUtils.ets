@@ -97,6 +97,16 @@ export class CommonUtils {
       message: content,
       duration: CommonConstants.TOAST_DURATION
     });
+  }/**
+   * Show toast content.
+   *
+   * @param {Resource | string} content content to show
+   */
+  public showToast(content: Resource | string): void {
+    promptAction.showToast({
+      message: content,
+      duration: CommonConstants.TOAST_DURATION
+    });
   }
 }
 

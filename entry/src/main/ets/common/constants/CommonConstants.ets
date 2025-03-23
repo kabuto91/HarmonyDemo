@@ -66,6 +66,7 @@ export default class CommonConstants {
    * Mine tab index.
    */
   static readonly MINE_TAB_INDEX: number = 1;
+  static readonly TEST_TAB_INDEX: number = 2;
 
   /**
    * Swiper cache count of the number 3.
@@ -121,5 +122,69 @@ export default class CommonConstants {
    * Tablet device type.
    */
   static readonly TABLET_DEVICE_TYPE: string = 'tablet';
+  /**
+   * The offset x of CustomDialog.
+   */
+  static readonly OFFSET_X: number = 0;
+
+  /**
+   * The offset y of CustomDialog.
+   */
+  static readonly OFFSET_Y: number = -25;
+
+  /**
+   * Number for 90%.
+   */
+  static readonly PERCENT_NINETY: string = '90%';
+
+  /**
+   * Number for 100%.
+   */
+  static readonly PERCENT_FULL: string = '100%';
+
+  /**
+   * Number for font weight 700.
+   */
+  static readonly FONT_WEIGHT_SEVEN_HUNDRED: number = 700;
+
+  /**
+   * The placeholder of leap year textInput.
+   */
+  static readonly LEAP_YEAR_INPUT: string = '请输入一个年份';
+
+  /**
+   * The sure answer of wether is a leap year.
+   */
+  static readonly LEAP_YEAR_YES: string = '该年份是闰年';
+
+  /**
+   * The unsure answer of wether is a leap year.
+   */
+  static readonly LEAP_YEAR_NO: string = '该年份不是闰年';
+
+  /**
+   * The placeholder of string textInput.
+   */
+  static readonly STRING_INPUT: string = '请输入一个字符串';
+
+  /**
+   * The sure answer of wether is a palindromic string.
+   */
+  static readonly PALINDROMIC_STRING_YES: string = '该字符串是回文字符串';
+
+  /**
+   * The unsure answer of wether is a palindromic string.
+   */
+  static readonly PALINDROMIC_STRING_NO: string = '该字符串不是回文字符串';
+
+  /**
+   * The result of string reversal.
+   */
+  static readonly STRING_PRE: string = '反转结果为：';
+
+  /**
+   * The time of toast.
+   */
+  static readonly TOAST_TIME: number = 2000;
 }
 
