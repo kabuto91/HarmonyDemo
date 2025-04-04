@@ -63,3 +63,13 @@ DevEco Studio工程目录结构提供工程视图和Ohos视图。工程视图（
 ## 自定义组件的生命周期
 ### aboutToAppear
 aboutToAppear函数在创建自定义组件的新实例后，在执行其build()函数之前执行。允许在aboutToAppear函数中改变状态变量，更改将在后续执行build()函数中生效。实现自定义布局的自定义组件的aboutToAppear生命周期在布局过程中触发。
+
+
+### 开发态与编译态的工程结构视图
+![img.png](img.png)
+
+从开发态到编译态，Module中的文件会发生如下变更：
+
+* ets目录：ArkTS源码编译生成.abc文件。
+* resources目录：AppScope目录下的资源文件会合入到Module下面资源目录中，如果两个目录下存在重名文件，编译打包后只会保留AppScope目录下的资源文件。
+* module配置文件：AppScope目录下的app.json5文件字段会合入到Module下面的module.json5文件之中，编译后生成HAP或HSP最终的module.json文件。
