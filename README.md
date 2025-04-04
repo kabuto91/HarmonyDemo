@@ -66,10 +66,43 @@ aboutToAppear函数在创建自定义组件的新实例后，在执行其build()
 
 
 ### 开发态与编译态的工程结构视图
-![img.png](img.png)
+![img.png](img/img.png)
 
 从开发态到编译态，Module中的文件会发生如下变更：
 
 * ets目录：ArkTS源码编译生成.abc文件。
 * resources目录：AppScope目录下的资源文件会合入到Module下面资源目录中，如果两个目录下存在重名文件，编译打包后只会保留AppScope目录下的资源文件。
 * module配置文件：AppScope目录下的app.json5文件字段会合入到Module下面的module.json5文件之中，编译后生成HAP或HSP最终的module.json文件。
+
+### UIAbility组件生命周期
+UIAbility的生命周期包括Create、Foreground、Background、Destroy四个状态，如下图所示。
+![img_1.png](img/img_1.png)
+
+#### Create状态   <br>
+Create状态为在应用加载过程中，UIAbility实例创建完成时触发，系统会调用onCreate()回调。可以在该回调中进行页面初始化操作，例如变量定义资源加载等，用于后续的UI展示。
+
+#### WindowStageCreate和WindowStageDestroy状态  <br> 
+UIAbility实例创建完成之后，在进入Foreground之前，系统会创建一个WindowStage。WindowStage创建完成后会进入onWindowStageCreate()回调，可以在该回调中设置UI加载、设置WindowStage的事件订阅。<br>
+在onWindowStageCreate()回调中通过loadContent()方法设置应用要加载的页面，并根据需要调用on('windowStageEvent')方法订阅WindowStage的事件（获焦/失焦、切到前台/切到后台、前台可交互/前台不可交互）。<br>
+对应于onWindowStageCreate()回调。在UIAbility实例销毁之前，则会先进入onWindowStageDestroy()回调，可以在该回调中释放UI资源。<br>
+#### WindowStageWillDestroy状态<br>
+对应onWindowStageWillDestroy()回调，在WindowStage销毁前执行，此时WindowStage可以使用。<br>
+#### Foreground和Background状态<br>
+Foreground和Background状态分别在UIAbility实例切换至前台和切换至后台时触发，对应于onForeground()回调和onBackground()回调。<br>
+onForeground()回调，在UIAbility的UI可见之前，如UIAbility切换至前台时触发。可以在onForeground()回调中申请系统需要的资源，或者重新申请在onBackground()中释放的资源。<br>
+onBackground()回调，在UIAbility的UI完全不可见之后，如UIAbility切换至后台时候触发。可以在onBackground()回调中释放UI不可见时无用的资源，或者在此回调中执行较为耗时的操作，例如状态保存等。<br>
+#### Destroy状态<br>
+Destroy状态在UIAbility实例销毁时触发。可以在onDestroy()回调中进行系统资源的释放、数据的保存等操作。<br>
+
+
+### UIAbility组件启动模式
+#### singleton启动模式
+singleton启动模式为单实例模式，也是默认情况下的启动模式。
+
+每次调用startAbility()方法时，如果应用进程中该类型的UIAbility实例已经存在，则复用系统中的UIAbility实例。系统中只存在唯一一个该UIAbility实例，即在最近任务列表中只存在一个该类型的UIAbility实例。
+#### multiton启动模式
+multiton启动模式为多实例模式，每次调用startAbility()方法时，都会在应用进程中创建一个新的该类型UIAbility实例。即在最近任务列表中可以看到有多个该类型的UIAbility实例。这种情况下可以将UIAbility配置为multiton（多实例模式）。
+#### specified启动模式
+specified启动模式为指定实例模式，针对一些特殊场景使用（例如文档应用中每次新建文档希望都能新建一个文档实例，重复打开一个已保存的文档希望打开的都是同一个文档实例）。
+![img.png](img/img3.png)
+
