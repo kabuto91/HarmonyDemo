@@ -60,10 +60,46 @@ Harmony学习demo
 ## 切换工程视图
 DevEco Studio工程目录结构提供工程视图和Ohos视图。工程视图（Project）展示工程中实际的文件结构，Ohos视图会隐藏一些编码中不常用到的文件，并将常用到的文件进行重组展示，方便开发者查询或定位所需编辑的模块或文件。
 
-## 自定义组件的生命周期
-### aboutToAppear
-aboutToAppear函数在创建自定义组件的新实例后，在执行其build()函数之前执行。允许在aboutToAppear函数中改变状态变量，更改将在后续执行build()函数中生效。实现自定义布局的自定义组件的aboutToAppear生命周期在布局过程中触发。
 
+### 页面生命周期，即被@Entry装饰的组件生命周期，提供以下生命周期接口：
+
+* onPageShow：页面每次显示时触发一次，包括路由过程、应用进入前台等场景。
+
+* onPageHide：页面每次隐藏时触发一次，包括路由过程、应用进入后台等场景。
+
+* onBackPress：当用户点击返回按钮时触发。
+### 组件生命周期，即一般用@Component装饰的自定义组件的生命周期，提供以下生命周期接口：
+
+* aboutToAppear：组件即将出现时回调该接口，具体时机为在创建自定义组件的新实例后，在执行其build()函数之前执行。
+
+* onDidBuild：组件build()函数执行完成之后回调该接口，开发者可以在这个阶段进行埋点数据上报等不影响实际UI的功能。不建议在onDidBuild函数中更改状态变量、使用animateTo等功能，这可能会导致不稳定的UI表现。
+
+* aboutToDisappear：aboutToDisappear函数在自定义组件析构销毁之前执行。不允许在aboutToDisappear函数中改变状态变量，特别是@Link变量的修改可能会导致应用程序行为不稳定。
+
+![img.png](img/img4.png)
+
+### Navigation页面生命周期：Navigation作为路由容器，其生命周期承载在NavDestination组件上，以组件事件的形式开放
+
+其生命周期大致可分为三类，自定义组件生命周期、通用组件生命周期和自有生命周期。其中，aboutToAppear和aboutToDisappear是自定义组件的生命周期(NavDestination外层包含的自定义组件)，OnAppear和OnDisappear是组件的通用生命周期。剩下的六个生命周期为NavDestination独有。
+![img.png](img/img5.png)
+
+* aboutToAppear：在创建自定义组件后，执行其build()函数之前执行（NavDestination创建之前），允许在该方法中改变状态变量，更改将在后续执行build()函数中生效。
+* onWillAppear：NavDestination创建后，挂载到组件树之前执行，在该方法中更改状态变量会在当前帧显示生效。
+* onAppear：通用生命周期事件，NavDestination组件挂载到组件树时执行。
+* onWillShow：NavDestination组件布局显示之前执行，此时页面不可见（应用切换到前台不会触发）。
+* onShown：NavDestination组件布局显示之后执行，此时页面已完成布局。
+* onWillHide：NavDestination组件触发隐藏之前执行（应用切换到后台不会触发）。
+* onHidden：NavDestination组件触发隐藏后执行（非栈顶页面push进栈，栈顶页面pop出栈或应用切换到后台）。
+* onWillDisappear：NavDestination组件即将销毁之前执行，如果有转场动画，会在动画前触发（栈顶页面pop出栈）。
+* onDisappear：通用生命周期事件，NavDestination组件从组件树上卸载销毁时执行。
+* aboutToDisappear：自定义组件析构销毁之前执行，不允许在该方法中改变状态变量。
+
+## 自定义组件的基本结构
+* struct：自定义组件基于struct实现，struct + 自定义组件名 + {...}的组合构成自定义组件，不能有继承关系。对于struct的实例化，可以省略new。
+* @Component：@Component装饰器仅能装饰struct关键字声明的数据结构。struct被@Component装饰后具备组件化的能力，需要实现build方法描述UI，一个struct只能被一个@Component装饰。@Component可以接受一个可选的bool类型参数。
+* build()：build()函数用于定义自定义组件的声明式UI描述，自定义组件必须定义build()函数。
+* @Entry：@Entry装饰的自定义组件将作为UI页面的入口。在单个UI页面中，最多可以使用@Entry装饰一个自定义组件。@Entry可以接受一个可选的LocalStorage的参数。
+* @Reusable：@Reusable装饰的自定义组件具备可复用能力。
 
 ### 开发态与编译态的工程结构视图
 ![img.png](img/img.png)
@@ -105,4 +141,6 @@ multiton启动模式为多实例模式，每次调用startAbility()方法时，�
 #### specified启动模式
 specified启动模式为指定实例模式，针对一些特殊场景使用（例如文档应用中每次新建文档希望都能新建一个文档实例，重复打开一个已保存的文档希望打开的都是同一个文档实例）。
 ![img.png](img/img3.png)
+
+###
 
