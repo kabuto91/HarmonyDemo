@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Huawei Device Co., Ltd.
+ * Copyright (c) 2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,47 +13,68 @@
  * limitations under the License.
  */
 
-import { UIAbility, Want, AbilityConstant } from '@kit.AbilityKit';
+import { AbilityConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { window } from '@kit.ArkUI';
-import { BusinessError, deviceInfo } from '@kit.BasicServicesKit';
-import Logger from '../common/utils/Logger';
-import CommonConstants from '../common/constants/CommonConstants';
-import { GlobalContext } from '../common/utils/GlobalContext';
+import { hilog } from '@kit.PerformanceAnalysisKit';
+import preferenceUtilsObject from '../common/database/PreferencesUtil';
+import RDBStoreUtil from '../common/database/RDBStoreUtil';
+import ConnectionUtils from '../common/network/ConnectionUtils';
 
 /**
  * Lift cycle management of Ability.
  */
-export default class EntryAbility extends UIAbility {
-  onCreate(want: Want, launchParam: AbilityConstant.LaunchParam) {
-    GlobalContext.getContext().setObject('abilityWant', want);
-    GlobalContext.getContext().setObject('launchParam', launchParam);
-    if (deviceInfo.deviceType !== CommonConstants.TABLET_DEVICE_TYPE) {
-      window.getLastWindow(this.context, (err, data) => {
-        if (err.code) {
-          Logger.error('Failed to obtain the top window. Cause: ' + JSON.stringify(err));
-          return;
-        }
-        let orientation = window.Orientation.PORTRAIT;
-        data.setPreferredOrientation(orientation, (err) => {
-          if (err.code) {
-            Logger.error('Failed to set window orientation. Cause: ' + JSON.stringify(err));
-            return;
-          }
-          Logger.info('Succeeded in setting window orientation.');
-        });
-      });
-    }
+export default class entryAbility extends UIAbility {
+  onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
+    preferenceUtilsObject.getFontPreferences(this.context);
+    ConnectionUtils.openRegister();
+    hilog.isLoggable(0x0000, 'testTag', hilog.LogLevel.INFO);
+    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onCreate');
+    hilog.info(0x0000, 'testTag', '%{public}s', 'want param:' + JSON.stringify(want) ?? '');
+    hilog.info(0x0000, 'testTag', '%{public}s', 'launchParam:' + JSON.stringify(launchParam) ?? '');
   }
 
-  onWindowStageCreate(windowStage: window.WindowStage) {
-    // Main window is created, set main page for this ability.
-    Logger.info(CommonConstants.TAG_ABILITY, 'Ability onWindowStageCreate');
-    windowStage.loadContent('pages/LoginPage', (err: BusinessError<void>, data) => {
+  onDestroy(): void | Promise<void> {
+    hilog.isLoggable(0x0000, 'testTag', hilog.LogLevel.INFO);
+    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onDestroy');
+  }
+
+  onWindowStageCreate(windowStage: window.WindowStage): void {
+    // Main window is created, set main page for this ability
+    hilog.isLoggable(0x0000, 'testTag', hilog.LogLevel.INFO);
+    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
+    windowStage.getMainWindow().then((data: window.Window) => {
+      // Window immersive.
+      data.setWindowLayoutFullScreen(true);
+    })
+    RDBStoreUtil.createObjectiveRDB(this.context);
+    windowStage.loadContent('pages/LoginPage', (err, data) => {
       if (err.code) {
-        Logger.error(CommonConstants.TAG_ABILITY, 'Load the content to failed ' + JSON.stringify(err));
+        hilog.isLoggable(0x0000, 'testTag', hilog.LogLevel.ERROR);
+        hilog.error(0x0000, 'testTag', 'Failed to load the content. Cause: %{public}s', JSON.stringify(err) ?? '');
         return;
       }
-      Logger.info(CommonConstants.TAG_ABILITY, 'Loading the content to succeeded ' + JSON.stringify(data));
+      ConnectionUtils.registerNetworkAvailableStatus();
+      hilog.isLoggable(0x0000, 'testTag', hilog.LogLevel.INFO);
+      hilog.info(0x0000, 'testTag', 'Succeeded in loading the content. Data: %{public}s', JSON.stringify(data) ?? '');
     });
+  }
+
+  onWindowStageDestroy(): void {
+    // Main window is destroyed, release UI related resources
+    hilog.isLoggable(0x0000, 'testTag', hilog.LogLevel.INFO);
+    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageDestroy');
+    ConnectionUtils.closeRegister();
+  }
+
+  onForeground(): void {
+    // Ability has brought to foreground
+    hilog.isLoggable(0x0000, 'testTag', hilog.LogLevel.INFO);
+    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onForeground');
+  }
+
+  onBackground(): void {
+    // Ability has back to background
+    hilog.isLoggable(0x0000, 'testTag', hilog.LogLevel.INFO);
+    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onBackground');
   }
 }

@@ -5,6 +5,10 @@
       "value": "#FFFFFF"
     },
     {
+      "name": "white",
+      "value": "#FFFFFF"
+    },
+    {
       "name": "background",
       "value": "#F1F3F5"
     },
@@ -13,7 +17,7 @@
       "value": "#182431"
     },
     {
-      "name": "more_text_color",
+      "name": "login_more_text_color",
       "value": "#99182431"
     },
     {
@@ -22,39 +26,55 @@
     },
     {
       "name": "line_color",
-      "value": "#0D182431"
+      "value": "#33182431"
     },
     {
       "name": "login_button_color",
       "value": "#007DFF"
     },
     {
-      "name": "blue_text_color",
+      "name": "login_blue_text_color",
       "value": "#007DFF"
     },
     {
-      "name": "main_page_selected",
+      "name": "other_login_text_color",
+      "value": "#838D97"
+    },
+    {
+      "name": "loading_color",
+      "value": "#182431"
+    },
+    {
+      "name": "mainPage_selected",
       "value": "#1698CE"
     },
     {
-      "name": "main_page_normal",
+      "name": "mainPage_normal",
       "value": "#6B6B6B"
+    },
+    {
+      "name": "mainPage_backgroundColor",
+      "value": "#F1F3F5"
     },
     {
       "name": "home_grid_fontColor",
       "value": "#99182431"
     },
     {
-      "name": "mine_button_color",
+      "name": "setting_button_backgroundColor",
       "value": "#E5E8EA"
     },
     {
-      "name": "logout_font_color",
+      "name": "setting_button_fontColor",
       "value": "#FA2A2D"
     },
     {
-      "name": "item_divider_color",
-      "value": "#33000000"
+      "name": "grid_linear_start",
+      "value": "#1a0a5918"
+    },
+    {
+      "name": "grid_linear_end",
+      "value": "#ffffff"
     }
   ]
 }

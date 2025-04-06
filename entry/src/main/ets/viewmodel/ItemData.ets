@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Huawei Device Co., Ltd.
+ * Copyright (c) 2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,32 +13,28 @@
  * limitations under the License.
  */
 
-/**
- * List item data entity.
- */
-export default class ItemData {
+export default class PageResource {
   /**
-   * The ID is used to distinguish the uniqueness of an item.
+   * ID of list item.
    */
-  id?: number;
-
+  id: number;
   /**
    * Text of list item.
    */
-  title?: Resource;
-
+  title: Resource;
   /**
    * Image of list item.
    */
-  img?: Resource;
-
+  img: Resource;
   /**
    * Other resource of list item.
    */
   others?: Resource;
 
-  /**
-   * Resource of click prompt.
-   */
-  clickPrompt?: Resource;
+  constructor(id: number, title: Resource, img: Resource, others?: Resource) {
+    this.id = id;
+    this.title = title;
+    this.img = img;
+    this.others = others;
+  }
 }

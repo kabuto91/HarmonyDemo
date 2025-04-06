@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Huawei Device Co., Ltd.
+ * Copyright (c) 2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,184 +13,189 @@
  * limitations under the License.
  */
 
-import CommonConstants from '../common/constants/CommonConstants';
-import StyleConstants from '../common/constants/StyleConstants';
-import CommonUtils from '../common/utils/CommonUtils';
-import MultipleDevicesUtils from '../common/utils/MultipleDevicesUtils';
+import { promptAction } from '@kit.ArkUI';
+import ConnectionUtils from '../common/network/ConnectionUtils';
+
+@Extend(TextInput)
+function inputStyle() {
+  .placeholderColor('#99182431')
+  .height('45vp')
+  .fontSize('18fp')
+  .backgroundColor('#F1F3F5')
+  .width('328vp')
+  .margin({ top: 12 })
+}
+
+@Extend(Line)
+function lineStyle() {
+  .width('328vp')
+  .height('1vp')
+  .backgroundColor('#33182431')
+}
+
+@Extend(Text)
+function blueTextStyle() {
+  .fontColor('#007DFF')
+  .fontSize('14fp')
+  .fontWeight(FontWeight.Medium)
+}
 
 /**
- * The login page consists of two components.
- * LoginTitle and LoginBottom, which can be invoked by directly referencing the control.
+ * Login page
  */
 @Entry
 @Component
 struct LoginPage {
-  @StorageProp('currentDeviceSize') currentDeviceSize: string = CommonConstants.SM;
-
-  onPageShow() {
-    MultipleDevicesUtils.register();
-  }
-
-  build() {
-    GridRow({
-      columns: {
-        sm: StyleConstants.COLUMNS_SM,
-        md: StyleConstants.COLUMNS_MD,
-        lg: StyleConstants.COLUMNS_LG
-      },
-      gutter: {
-        x: StyleConstants.GRID_GUTTER
-      }
-    }) {
-      GridCol({
-        span: {
-          sm: StyleConstants.SPAN_SM,
-          md: StyleConstants.SPAN_MD,
-          lg: StyleConstants.SPAN_LG
-        }, offset: {
-          md: StyleConstants.OFFSET_MD,
-          lg: StyleConstants.OFFSET_LG
-        }
-      }) {
-        Column() {
-          // Title component
-          LoginTitle()
-          // Bottom component
-          LoginBottom()
-        }
-      }
-    }
-    .backgroundColor($r('app.color.background'))
-  }
-}
-
-@Preview
-@Component
-struct LoginTitle {
-  build() {
-    Column() {
-      Image($r('app.media.startIcon'))
-        .width($r('app.float.logo_image_size'))
-        .height($r('app.float.logo_image_size'))
-        .margin({ bottom: $r('app.float.logo_margin_bottom') })
-      Text($r('app.string.login_page'))
-        .fontSize($r('app.float.common_text_size'))
-        .fontWeight(FontWeight.Medium)
-        .fontColor($r('app.color.title_text_color'))
-      Text($r('app.string.login_more'))
-        .fontSize($r('app.float.normal_text_size'))
-        .fontColor($r('app.color.more_text_color'))
-        .margin({
-          top: $r('app.float.more_margin_top'),
-          bottom: $r('app.float.more_margin_bottom')
-        })
-    }
-    .backgroundColor($r('app.color.background'))
-    .justifyContent(FlexAlign.Center)
-    .width(StyleConstants.FULL_PARENT)
-    .height(StyleConstants.LOGIN_LOGO_HEIGHT)
-  }
-}
-
-@Preview
-@Component
-struct LoginBottom {
   @State account: string = '';
   @State password: string = '';
+  @State isShowProgress: boolean = false;
+  private timeOutId: number = -1;
+  pathStack: NavPathStack = new NavPathStack();
+
+  @Builder
+  imageButton(src: Resource) {
+    Button({ type: ButtonType.Circle, stateEffect: true }) {
+      Image(src)
+    }
+    .height('48vp')
+    .width('48vp')
+    .backgroundColor('#F1F3F5')
+  }
+
+  login(result: boolean): void {
+    if (this.account === '' || this.password === '') {
+      promptAction.showToast({
+        message: $r('app.string.input_empty_tips')
+      });
+    } else {
+      this.isShowProgress = true;
+      if (this.timeOutId === -1) {
+        this.timeOutId = setTimeout(async () => {
+          this.isShowProgress = false;
+          this.timeOutId = -1;
+
+          if (result) {
+            this.pathStack.pushPathByName('MainPage', null);
+          } else {
+            promptAction.showToast({
+              message: $r('app.string.Network_Lost')
+            });
+          }
+        }, 2000);
+      }
+    }
+  }
+
+  aboutToDisappear() {
+    clearTimeout(this.timeOutId);
+    this.timeOutId = -1;
+  }
 
   build() {
-    Column() {
+    Navigation(this.pathStack) {
       Column() {
+        Image($r('app.media.logo'))
+          .width('78vp')
+          .height('78vp')
+          .margin({ top: '150vp', bottom: '8vp' })
+        Text($r('app.string.login_page'))
+          .fontSize('24fp')
+          .fontWeight(FontWeight.Medium)
+          .fontColor('#182431')
+        Text($r('app.string.login_more'))
+          .fontSize('16fp')
+          .fontColor('#99182431')
+          .margin({
+            bottom: '30vp',
+            top: '8vp'
+          })
+
         TextInput({ placeholder: $r('app.string.account') })
-          .maxLength(StyleConstants.INPUT_ACCOUNT_LENGTH)
+          .maxLength(11)
           .type(InputType.Number)
           .inputStyle()
           .onChange((value: string) => {
             this.account = value;
           })
-
         Line()
-          .width(StyleConstants.FULL_PARENT)
-          .height($r('app.float.line_height'))
-          .margin({
-            left: $r('app.float.line_margin_left'),
-            right: $r('app.float.line_margin_right')
-          })
-          .backgroundColor($r('app.color.line_color'))
+          .lineStyle()
 
         TextInput({ placeholder: $r('app.string.password') })
-          .maxLength(StyleConstants.INPUT_PASSWORD_LENGTH)
+          .maxLength(8)
           .type(InputType.Password)
           .inputStyle()
           .onChange((value: string) => {
             this.password = value;
           })
-      }
-      .backgroundColor(Color.White)
-      .borderRadius($r('app.float.login_input_radius'))
+        Line()
+          .lineStyle()
 
-      Row() {
-        Text($r('app.string.message_login'))
-          .blueTextStyle()
-          .onClick(() => {
-            CommonUtils.showToastContent($r('app.string.incomplete_toast'));
+        Row() {
+          Text($r('app.string.message_login'))
+            .blueTextStyle()
+          Text($r('app.string.forgot_password'))
+            .blueTextStyle()
+        }
+        .justifyContent(FlexAlign.SpaceBetween)
+        .width('328vp')
+        .margin({ top: '8vp' })
+
+        Button($r('app.string.login'), { type: ButtonType.Capsule })
+          .width('328vp')
+          .height('40vp')
+          .fontSize('16fp')
+          .fontWeight(FontWeight.Medium)
+          .backgroundColor($r('app.color.login_button_color'))
+          .margin({
+            top: '48vp',
+            bottom: '12vp'
           })
-        Text($r('app.string.forgot_password'))
-          .blueTextStyle()
-          .onClick(() => {
-            CommonUtils.showToastContent($r('app.string.incomplete_toast'));
+          .onClick(async () => {
+            await ConnectionUtils.isNetworkConnected().then((value) => {
+              this.login(value);
+            })
           })
+        Text($r('app.string.register_account'))
+          .fontColor('#007DFF')
+          .fontSize('16fp')
+          .fontWeight(FontWeight.Medium)
+
+        if (this.isShowProgress) {
+          LoadingProgress()
+            .color('#182431')
+            .width('30vp')
+            .height('30vp')
+            .margin({ top: '20vp' })
+        }
+
+        Blank()
+        Text($r('app.string.other_login_method'))
+          .fontColor('#838D97')
+          .fontSize('12fp')
+          .fontWeight(FontWeight.Medium)
+          .margin({
+            top: '50vp',
+            bottom: '12vp'
+          })
+        Row({ space: 44 }) {
+          this.imageButton($r('app.media.login_method1'))
+          this.imageButton($r('app.media.login_method2'))
+          this.imageButton($r('app.media.login_method3'))
+        }
+        .margin({ bottom: '16vp' })
       }
-      .justifyContent(FlexAlign.SpaceBetween)
-      .width(StyleConstants.FULL_PARENT)
-      .margin({ top: $r('app.float.forgot_margin_top') })
+      .height('100%')
+      .width('100%')
       .padding({
-        left: $r('app.float.forgot_padding_left'),
-        right: $r('app.float.forgot_padding_right')
+        left: '12vp',
+        right: '12vp',
+        bottom: '24vp'
       })
-
-      Button($r('app.string.login'))
-        .id(CommonConstants.LOGIN_BUTTON_ID)
-        .width(StyleConstants.FULL_PARENT)
-        .height($r('app.float.login_button_height'))
-        .fontSize($r('app.float.normal_text_size'))
-        .fontWeight(FontWeight.Medium)
-        .backgroundColor($r('app.color.login_button_color'))
-        .margin({
-          top: $r('app.float.login_button_top'),
-          bottom: $r('app.float.login_button_bottom')
-        })
-        .onClick(() => {
-          CommonUtils.loginArkTS(this.account, this.password);
-        })
-      Text($r('app.string.register_account'))
-        .fontColor($r('app.color.blue_text_color'))
-        .fontSize($r('app.float.normal_text_size'))
-        .fontWeight(FontWeight.Medium)
-        .onClick(() => {
-          CommonUtils.showToastContent($r('app.string.incomplete_toast'));
-        })
     }
-    .padding({
-      left: $r('app.float.login_button_left'),
-      right: $r('app.float.login_button_right'),
-    })
-    .backgroundColor($r('app.color.background'))
-    .height(StyleConstants.LOGIN_BOTTOM_HEIGHT)
+    .backgroundColor('#F1F3F5')
+    .width('100%')
+    .height('100%')
+    .hideTitleBar(true)
+    .hideToolBar(true)
   }
-}
-
-@Extend(TextInput) function inputStyle() {
-  .placeholderColor($r('app.color.placeholder_color'))
-  .height($r('app.float.login_input_height'))
-  .fontSize($r('app.float.normal_text_size'))
-  .backgroundColor(Color.White)
-  .margin({ top: $r('app.float.input_margin_top') })
-  .padding({ left: StyleConstants.INPUT_PADDING_LEFT })
-}
-
-@Extend(Text) function blueTextStyle() {
-  .fontColor($r('app.color.blue_text_color'))
-  .fontSize($r('app.float.small_text_size'))
-  .fontWeight(FontWeight.Medium)
 }

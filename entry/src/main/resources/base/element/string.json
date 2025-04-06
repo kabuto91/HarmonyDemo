@@ -1,12 +1,16 @@
 {
   "string": [
     {
+      "name": "module_desc",
+      "value": "description"
+    },
+    {
       "name": "EntryAbility_desc",
-      "value": "Main program entry"
+      "value": "description"
     },
     {
       "name": "EntryAbility_label",
-      "value": "LoginDemo"
+      "value": "PageAndData"
     },
     {
       "name": "login_page",
@@ -41,6 +45,22 @@
       "value": "SMS verification code login"
     },
     {
+      "name": "other_login_method",
+      "value": "Other login methods"
+    },
+    {
+      "name": "vertical_line",
+      "value": "  |  "
+    },
+    {
+      "name": "input_empty_tips",
+      "value": "The input cannot be empty."
+    },
+    {
+      "name": "login_success",
+      "value": "The login is successful."
+    },
+    {
       "name": "my_love",
       "value": "My favorite"
     },
@@ -73,71 +93,123 @@
       "value": "Recycle Bin"
     },
     {
-      "name": "main_page",
-      "value": "Home"
-    },
-    {
-      "name": "mine_page",
-      "value": "Mine"
-    },
-    {
-      "name": "main_page_rankings",
+      "name": "rankings",
       "value": "Rankings"
     },
     {
-      "name": "main_page_others",
-      "value": "Xiamen Station, we'll see you."
-    },
-    {
-      "name": "main_page_new",
+      "name": "new_product_debut",
       "value": "New product debut"
     },
     {
-      "name": "main_Page_brand",
+      "name": "big_name_flash",
       "value": "Big name flash"
     },
     {
-      "name": "main_page_more",
-      "value": "More Big Names"
-    },
-    {
-      "name": "main_page_found",
+      "name": "find_good",
       "value": "Find good things"
     },
     {
-      "name": "mine_title_name",
-      "value": "Mr. Lee"
+      "name": "xiamen_station",
+      "value": "Xiamen Station, we'll see you."
     },
     {
-      "name": "mine_title_email",
-      "value": "2000000@shenhua.cc"
+      "name": "more_big_names",
+      "value": "More Big Names"
     },
     {
-      "name": "mine_list_news",
+      "name": "push_notifications",
       "value": "Push Notifications"
     },
     {
-      "name": "mine_list_data",
+      "name": "data_management",
       "value": "Data Management"
     },
     {
-      "name": "mine_list_menu",
+      "name": "menu_settings",
       "value": "Menu Settings"
     },
     {
-      "name": "mine_list_about",
+      "name": "about",
       "value": "About"
     },
     {
-      "name": "mine_list_storage",
+      "name": "clear_cache",
       "value": "Clear Cache"
     },
     {
-      "name": "mine_list_privacy",
+      "name": "mainPage_tabTitles_home",
+      "value": "Home"
+    },
+    {
+      "name": "mainPage_tabTitles_mine",
+      "value": "Mine"
+    },
+    {
+      "name": "mainPage_top",
+      "value": "Rankings"
+    },
+    {
+      "name": "mainPage_text_top",
+      "value": "Xiamen Station, we'll see you."
+    },
+    {
+      "name": "mainPage_new",
+      "value": "New product debut"
+    },
+    {
+      "name": "mainPage_text_new",
+      "value": "Xiamen Station, we'll see you."
+    },
+    {
+      "name": "mainPage_brand",
+      "value": "Big name flash"
+    },
+    {
+      "name": "mainPage_text_brand",
+      "value": "More Big Names"
+    },
+    {
+      "name": "mainPage_found",
+      "value": "Find good things"
+    },
+    {
+      "name": "mainPage_text_found",
+      "value": "Xiamen Station, we'll see you."
+    },
+    {
+      "name": "setting_account_name",
+      "value": "Mr. Lee"
+    },
+    {
+      "name": "setting_account_email",
+      "value": "2000000@test.cc"
+    },
+    {
+      "name": "setting_list_news",
+      "value": "Push Notifications"
+    },
+    {
+      "name": "setting_list_font",
+      "value": "Fontsize Change"
+    },
+    {
+      "name": "setting_list_menu",
+      "value": "Menu Settings"
+    },
+    {
+      "name": "setting_list_about",
+      "value": "About"
+    },
+    {
+      "name": "setting_list_storage",
+      "value": "Clear Cache"
+    },
+    {
+      "name": "setting_list_privacy",
       "value": "Privacy Agreement"
     },
     {
-      "name": "mine_button",
+      "name": "setting_button",
       "value": "Logout"
     },
     {
@@ -145,156 +217,124 @@
       "value": "List"
     },
     {
-      "name": "mine_toggle",
+      "name": "setting_toggle",
       "value": "switch"
     },
     {
-      "name": "incomplete_toast",
-      "value": "This function is not perfect, please look forward to it."
+      "name": "bind_title",
+      "value": "Exercise completion"
     },
     {
-      "name": "please_input_account",
-      "value": "Please input the account"
+      "name": "fontsize_change",
+      "value": "FontSize change"
     },
     {
-      "name": "please_input_password",
-      "value": "Please input the password"
+      "name": "Confirmed",
+      "value": "Confirmed"
     },
     {
-      "name": "open_my_love",
-      "value": "Open my favorite"
+      "name": "Cancel",
+      "value": "Cancel"
     },
     {
-      "name": "open_history_record",
-      "value": "Open history"
+      "name": "sport_name",
+      "value": "Sport Name"
     },
     {
-      "name": "open_message",
-      "value": "Open message"
+      "name": "Morning_jogging",
+      "value": "Morning jogging"
     },
     {
-      "name": "open_shopping_cart",
-      "value": "Open shopping cart"
+      "name": "Yoga",
+      "value": "Yoga"
     },
     {
-      "name": "open_my_goal",
-      "value": "Open my goal"
+      "name": "Swimming",
+      "value": "Swimming"
     },
     {
-      "name": "open_group",
-      "value": "Open group"
+      "name": "Exercise_duration",
+      "value": "Exercise duration: (minutes)"
     },
     {
-      "name": "open_favorites",
-      "value": "Open favorites"
+      "name": "Completion_Status",
+      "value": "Completion Status"
     },
     {
-      "name": "open_recycle_bin",
-      "value": "Open Recycle Bin"
+      "name": "Completed",
+      "value": "Completed"
     },
     {
-      "name": "open_rankings",
-      "value": "Open rankings"
+      "name": "Uncompleted",
+      "value": "Uncompleted"
     },
     {
-      "name": "open_new",
-      "value": "Open new product debut"
+      "name": "submit",
+      "value": "Submit"
     },
     {
-      "name": "open_brand",
-      "value": "Open big name flash"
+      "name": "enter_duration",
+      "value": "Please enter the exercise duration."
     },
     {
-      "name": "open_found",
-      "value": "Open find good things"
+      "name": "My_plans",
+      "value": "My Plans"
     },
     {
-      "name": "open_news",
-      "value": "Push is on"
+      "name": "ALL",
+      "value": "All"
     },
     {
-      "name": "close_news",
-      "value": "Push is off"
+      "name": "delete_question",
+      "value": "Are you sure you want to delete the plan?"
     },
     {
-      "name": "open_data",
-      "value": "Open data management"
+      "name": "delete",
+      "value": "Delete"
     },
     {
-      "name": "open_menu",
-      "value": "Open menu settings"
+      "name": "Add_Plans",
+      "value": "Add plan"
     },
     {
-      "name": "open_about",
-      "value": "Open about"
+      "name": "status",
+      "value": "Status"
     },
     {
-      "name": "clear_storage",
-      "value": "Clear cache succeeded"
+      "name": "Duration",
+      "value": "Duration"
     },
     {
-      "name": "check_privacy",
-      "value": "Check privacy agreement"
+      "name": "Tab_Bar_One",
+      "value": "Home Page"
     },
     {
-      "name": "home_title",
-      "value": "Home"
+      "name": "Tab_Bar_Two",
+      "value": "Mine"
     },
     {
-      "name": "mine_title",
-      "value": "我的"
+      "name": "Network_Available",
+      "value": "Network Available"
     },
     {
-      "name": "test",
-      "value": "test"
+      "name": "Network_Lost",
+      "value": "Network Lost"
     },
     {
-      "name": "module_desc",
-      "value": "module description"
+      "name": "Network_Unavailable",
+      "value": "Network Unavailable"
     },
     {
-      "name": "ArkTS_Development_Case",
-      "value": "ArkTS Development Case"
+      "name": "Login_Failed",
+      "value": "Failed to log in because the network is not connected."
     },
     {
-      "name": "DaffodilsNumber",
-      "value": "Print the number of daffodils within 1000"
+      "name": "Internet",
+      "value": "Internet Permission Request"
     },
     {
-      "name": "MultiplicationTable",
-      "value": "Print Multiplication Tables"
-    },
-    {
-      "name": "IsPalindromicString",
-      "value": "Determines whether a string is a palindromic string"
-    },
-    {
-      "name": "StringReversal",
-      "value": "String reversal"
-    },
-    {
-      "name": "IsLeapYear",
-      "value": "Determine whether it is a leap year"
-    },
-    {
-      "name": "DaffodilsNumberTitle",
-      "value": "Daffodils Number"
-    },
-    {
-      "name": "Judgment_of_leap_year",
-      "value": "Judgment of leap year"
-    },
-    {
-      "name": "Judgment_of_palindromic_string",
-      "value": "Judgment of palindromic string"
-    },
-    {
-      "name": "Multiplication_Table_Title",
-      "value": "Multiplication Tables"
-    },
-    {
-      "name": "check_info_in_log",
-      "value": "Please check in the log print"
+      "name": "network_info",
+      "value": "NetWork Info Permission Request"
     }
   ]
 }
